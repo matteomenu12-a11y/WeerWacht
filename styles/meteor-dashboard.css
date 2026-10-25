@@ -1,0 +1,79 @@
+/* WeerWacht — Midnight Observatory; scoped visual override. */
+:root{--bg:#080e1a;--panel:#112033;--text:#f0f7ff;--muted:#9fb5c9;--line:#a3d5ff24;--blue:#8adfff;--amber:#ffd086;color-scheme:dark}
+body{background:radial-gradient(ellipse 70% 38% at 50% 0%,#244e7844,transparent 90%),linear-gradient(#080e1a,#0b1324 60%,#080e1a);background-attachment:fixed}
+.brand-dot{color:#8adfff;text-shadow:0 0 24px #60c9ff8a}
+.eyebrow{color:#addbfa;letter-spacing:.20em}
+.hero{background:transparent;isolation:isolate}
+.hero:before{content:"";position:absolute;z-index:-1;inset:0;pointer-events:none;background:radial-gradient(ellipse 30% 38% at 15% 30%,#3157bd44,transparent 90%),radial-gradient(ellipse 32% 35% at 85% 15%,#6c69c73e,transparent 90%),radial-gradient(ellipse 40% 28% at 50% 76%,#288b9a44,transparent 85%);animation:ww-aurora 20s ease-in-out infinite alternate}
+@keyframes ww-aurora{0%{transform:translate3d(-3%,0,0) scale(1);opacity:.55}50%{transform:translate3d(2%,-2%,0) scale(1.08);opacity:1}100%{transform:translate3d(-1%,2%,0) scale(1.03);opacity:.65}}
+.hero-content{padding-top:146px;padding-bottom:64px}
+.hero h1 span{background:linear-gradient(120deg,#d6eeff,#81d9f6 55%,#bdb4ff);color:transparent;-webkit-background-clip:text;background-clip:text}
+.hero h1{text-shadow:0 9px 38px #020816a0}.hero-lead{color:#a9c9e4}
+.location-search form{background:linear-gradient(120deg,#182d43ec,#111b30e5);border:1px solid #a2dcff5c;box-shadow:0 16px 60px #0209159c,inset 0 1px #ffffff19;transition:transform .25s,border-color .25s,box-shadow .25s}
+.location-search form:focus-within{transform:translateY(-3px);border-color:#a5eaff;box-shadow:0 20px 70px #377caa5b}
+.search-results{background:#111c2df5;border-color:#a1d7ff45}
+.quick-locations button{color:#b1c9de;transition:transform .25s,color .25s,background .25s}.quick-locations button:hover,.quick-locations .selected{background:#91cfff1f;color:#fff;transform:translateY(-2px)}
+.temperature{animation:ww-float 8s ease-in-out infinite;filter:drop-shadow(0 0 26px #70c9f53b)}
+@keyframes ww-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.data-pill{background:#102238d9;color:#c7e9fc;border:1px solid #9edaff31}
+.ww-observation-hud{position:relative;text-align:left;overflow:hidden;width:min(650px,calc(100vw - 36px));margin:23px auto 0;border:1px solid #9cd6ff3d;border-radius:24px;background:linear-gradient(125deg,#203a53d9,#101b30e8 60%,#292e4bd0);backdrop-filter:blur(32px) saturate(128%);-webkit-backdrop-filter:blur(32px) saturate(128%);box-shadow:0 25px 75px #030916b3,inset 0 1px #ffffff17;animation:ww-hud-in .75s cubic-bezier(.2,.75,.2,1) both}
+@keyframes ww-hud-in{from{opacity:0;transform:translateY(20px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+.ww-observation-hud:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(100deg,transparent 25%,#ffffff0b 50%,transparent 75%);transform:translateX(-120%);animation:ww-sheen 11s linear infinite}
+@keyframes ww-sheen{0%,65%{transform:translateX(-120%)}90%,100%{transform:translateX(120%)}}
+.ww-hud-title{display:flex;align-items:center;gap:11px;border-bottom:1px solid #c5e1ff20;padding:13px 19px;color:#b4dfff;font-size:9px;font-weight:700;letter-spacing:.17em}.ww-hud-title small{margin-left:auto;color:#a7bdd1;font-size:10px;letter-spacing:0;font-weight:400}
+.ww-signal{position:relative;display:inline-block;height:8px;width:8px;flex:none;border-radius:50%;background:#88efd2;box-shadow:0 0 15px #88efd2ab}.ww-signal:after{content:"";position:absolute;inset:-6px;border:1px solid #89f4d9a0;border-radius:50%;animation:ww-ping 2.8s ease-out infinite}
+@keyframes ww-ping{0%{transform:scale(.5);opacity:1}85%,100%{transform:scale(1.25);opacity:0}}
+.ww-hud-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.ww-hud-grid>div{display:grid;grid-template-columns:19px minmax(0,1fr);gap:5px 7px;align-items:center;padding:19px}.ww-hud-grid>div+div{border-left:1px solid #e5f4ff14}
+.ww-hud-grid svg{color:#94d3f6}.ww-hud-grid>div>span{color:#9eb9d0;font-size:9px;letter-spacing:.07em}
+.ww-hud-grid strong{grid-column:1/-1;font-size:29px;letter-spacing:-.05em;line-height:1.3}.ww-hud-grid strong small{font-size:12px;color:#b1c9e1;font-weight:400;letter-spacing:0}
+.ww-hud-radar-link{display:flex;align-items:center;justify-content:center;gap:9px;background:linear-gradient(90deg,#70caff0e,#a8a0ff19);border-top:1px solid #b2dfff19;padding:12px;font-size:12px;font-weight:650;color:#d5ecfc;transition:background .2s}
+.ww-hud-radar-link:hover{background:#8dd8ff24}.ww-radar-wheel{height:15px;width:15px;border:1px solid #a1e6ff8c;border-radius:50%;background:conic-gradient(transparent 0 70%,#9ee8ff 88%,transparent);animation:ww-turn 4s linear infinite}@keyframes ww-turn{to{transform:rotate(360deg)}}
+.nav-inner,.scrolled .nav-inner{background:#0e1a2ae6!important;border-color:#a6dbff3b!important;box-shadow:0 14px 55px #01051394,inset 0 1px #ffffff18!important;backdrop-filter:blur(30px)!important;-webkit-backdrop-filter:blur(30px)!important}
+.navbar .desktop-nav a.active{background:linear-gradient(130deg,#89dfff,#abb7ff);color:#0a192c;box-shadow:0 0 23px #78cdff38}
+.navbar .desktop-nav a:hover{background:#9bd5ff1f;color:#fff}
+.metric,.weather-extra,.forecast-panel,.week-panel,.details-panel,.source-card,.warning-card,.warning-unavailable,.account-cta,.about-note,.maker-panel,.announcements article{background:linear-gradient(145deg,#1c2f4abd,#101a2de1)!important;border:1px solid #acd9ff2c!important;box-shadow:0 18px 58px #03081576,inset 0 1px #ffffff12;backdrop-filter:blur(32px);-webkit-backdrop-filter:blur(32px);transition:transform .33s cubic-bezier(.18,.8,.2,1),box-shadow .33s,border-color .33s}
+.metric:hover,.weather-extra:hover,.warning-card:hover{transform:translateY(-5px);border-color:#99dfff79!important;box-shadow:0 25px 65px #020816b0,0 0 25px #80caff18}
+.metric-label,.metric>p:last-child{color:#b5cbe0}.metric-label svg{color:#97d5f5}.metric-value{color:#f5faff}
+.weather-map-section{position:relative;padding-top:70px}
+.weather-map-section:before{content:"";position:absolute;inset:0 -10% auto;height:280px;z-index:-1;background:radial-gradient(ellipse,#307bbd30,transparent 75%);pointer-events:none}
+.weather-map-shell{background:#0c1729e8!important;border:1px solid #a9dfff53!important;border-radius:28px!important;box-shadow:0 32px 90px #0206129e,0 0 75px #2364a519}
+.map-topbar,.radar-playback,.map-footer,.model-map-caption{background:#102033e6!important}
+.map-topbar{padding:18px 21px!important;border-bottom:1px solid #b5daff22!important}
+.map-topbar strong{color:#f0f7ff}.map-topbar small{color:#a0c0d9}
+.ww-layer-orbit{display:grid;place-items:center;flex:none;width:39px;height:39px;border-radius:13px;background:linear-gradient(130deg,#3489af42,#9588ff16);border:1px solid #9adfff43;color:#a0dfff;box-shadow:inset 0 1px #ffffff18}
+.map-mode-tabs{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:10px 14px!important;background:#0c1727!important;border-bottom:1px solid #a7dbff29!important}
+.map-mode-tabs button{display:flex;align-items:center;justify-content:center;gap:7px;min-width:0;border:1px solid transparent;border-radius:13px!important;padding:12px 9px!important;color:#bdcce0!important;transition:background .2s,transform .2s,color .2s}
+.map-mode-tabs button small{font-size:10px;color:#8bacc8}.map-mode-tabs button i{height:6px;width:6px;flex:none;border-radius:50%;background:#52657b}
+.map-mode-tabs button:hover{background:#80c4ff15;transform:translateY(-2px)}
+.map-mode-tabs button.active{background:linear-gradient(120deg,#244d6ce3,#384766e3)!important;border-color:#b5e0ff54;color:#f3fbff!important;box-shadow:inset 0 1px #ffffff18,0 9px 21px #02071485}
+.map-mode-tabs button.active i{background:#8af2d4;box-shadow:0 0 12px #7bebcd}
+.map-stage{background:#0b1423!important}
+.ww-map-instrument{position:absolute;top:14px;right:16px;z-index:409;display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:99px;font-size:9px;font-weight:750;letter-spacing:.1em;color:#c3e7f6;background:#0c1e31dc;border:1px solid #a2dfff49;backdrop-filter:blur(16px);pointer-events:none;box-shadow:0 10px 35px #02071676}
+.radar-stamp,.radar-legend,.map-popover,.map-loading,.map-error,.map-side-buttons button{background:#102036ee!important;border-color:#a8dfff3e!important;box-shadow:0 10px 35px #030c19a8,inset 0 1px #ffffff15;backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px)}
+.radar-stamp .small-dot{animation:ww-beat 3s ease-in-out infinite;box-shadow:0 0 10px #93e8e2b0}@keyframes ww-beat{0%,100%{opacity:1}50%{opacity:.5}}
+.radar-playback{padding:20px 23px!important;border-top:1px solid #c0eaff27}
+.radar-playback-head>.radar-play{background:linear-gradient(135deg,#a0e8ff,#adafff)!important;color:#0b182c!important;box-shadow:0 10px 30px #84d5ff50;transition:transform .2s,box-shadow .2s}
+.radar-playback-head>.radar-play:hover:not(:disabled){transform:scale(1.1);box-shadow:0 14px 38px #82dfff78}
+.radar-playback>input[type=range],.map-footer input[type=range]{accent-color:#83dfff}
+.radar-time-labels span{color:#b0cbe0}.radar-time-labels span:nth-child(2){color:#a5daff}
+.map-footer{border-color:#aad9fa27!important;color:#abc4d9!important}.map-footer a{color:#bdeaff!important}
+.ww-knmi-fallback{margin-left:auto;padding:9px 13px!important;font-size:11px!important}.ww-nowcast-player .radar-playback-head>div{flex:1;min-width:0}
+.map-explanation{color:#a5bed5}
+.btn.outline{border-color:#aadaff38;background:#aadaff0c}.btn.outline:hover{background:#95dcff24}.btn.light{background:#cbecff;color:#0e243b}
+@media(max-width:760px){
+ .hero-content{padding-top:127px}
+ .ww-observation-hud{width:calc(100vw - 26px);border-radius:20px}
+ .ww-hud-title{font-size:8px;padding:12px;gap:7px}.ww-hud-title small{font-size:9px}
+ .ww-hud-grid>div{padding:13px 9px;grid-template-columns:17px 1fr;column-gap:4px}
+ .ww-hud-grid svg{width:16px}.ww-hud-grid>div>span{font-size:7px;letter-spacing:0}.ww-hud-grid strong{font-size:22px}.ww-hud-grid strong small{font-size:9px}
+ .map-topbar{padding:13px!important}.ww-layer-orbit{height:32px;width:32px;border-radius:10px}
+ .map-mode-tabs{padding:8px!important;gap:4px}.map-mode-tabs button{padding:10px 4px!important;gap:5px;font-size:11px!important}.map-mode-tabs button small{font-size:9px}
+ .ww-map-instrument{top:auto;bottom:12px;right:12px;font-size:8px}
+ .radar-playback{padding:14px!important}.ww-knmi-fallback{font-size:9px!important;padding:8px!important;max-width:88px;line-height:1.15}
+ .metric:hover,.weather-extra:hover,.warning-card:hover{transform:none}
+}
+@media(max-width:375px){.map-mode-tabs button{font-size:10px!important}.map-mode-tabs button small{font-size:8px}.ww-hud-grid strong{font-size:19px}}
+@media(prefers-reduced-motion:reduce){.hero:before,.temperature,.ww-observation-hud,.ww-observation-hud:before,.ww-signal:after,.ww-radar-wheel,.radar-stamp .small-dot{animation:none!important}.metric,.weather-extra,.warning-card,.map-mode-tabs button{transition:none!important}}
+
+.ww-knmi-notice{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;padding:12px 18px;background:#674a2438;color:#f9dca5;font-size:12px;border-bottom:1px solid #d9a25a33}.ww-knmi-notice button{border:1px solid #e3b56a62;border-radius:99px;padding:5px 12px;color:#ffe3b2}.ww-knmi-notice button:hover{background:#deb87824}
