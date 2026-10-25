@@ -4,14 +4,14 @@ export const KNMI_NOWCAST_DATASET='radar_forecast_2.0';
 export type KnmiNowcast={layer:string;frames:number[];fetchedAt:number;style:string;referenceTime?:string;projection:'EPSG:3857'|'EPSG:4326'};
 
 function decodeXML(s:string){return s.replace(/&amp;/g,'&').replace(/&quot;/g,'"').replace(/&apos;/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>');}
-function attr(s:string,key:string){const re=new RegExp(String.raw`\\b`+key+String.raw`=["']([^"']*)["']`,'i');return re.exec(s)?.[1];}
+function attr(s:string,key:string){const re=new RegExp(String.raw`\b`+key+String.raw`=["']([^"']*)["']`,'i');return re.exec(s)?.[1];}
 function times(raw:string){
  const values=new Set<number>();
  for(const item of raw.split(',')){
   const parts=item.trim().split('/');
   if(parts.length===3){
    const start=Date.parse(parts[0]),end=Date.parse(parts[1]);
-   const step=/^PT(?:(\\d+)H)?(?:(\\d+)M)?(?:(\\d+)S)?$/i.exec(parts[2]);
+   const step=/^PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?$/i.exec(parts[2]);
    const ms=step?((Number(step[1]||0)*3600+Number(step[2]||0)*60+Number(step[3]||0))*1000):0;
    if(Number.isFinite(start)&&Number.isFinite(end)&&ms>=60000&&ms<=3600000&&end-start<=7*86400000)
     for(let t=start,count=0;t<=end&&count<10000;t+=ms,count++)values.add(Math.floor(t/1000));
@@ -22,9 +22,9 @@ function times(raw:string){
  return [...values].sort((a,b)=>a-b);
 }
 export function parseKnmiCapabilities(xml:string,now=Date.now()):KnmiNowcast{
- if(xml.length>4_000_000||!/<(?:\\w+:)?(?:WMS_Capabilities|WMT_MS_Capabilities)\\b/i.test(xml))
+ if(xml.length>4_000_000||!/<(?:\w+:)?(?:WMS_Capabilities|WMT_MS_Capabilities)\b/i.test(xml))
   throw Error('De KNMI-kaartdienst gaf geen geldige WMS-informatie.');
- const nameMatches=[...xml.matchAll(/<(?:\\w+:)?Name\\s*>([^<]+)<\\/(?:\\w+:)?Name>/gi)];
+ const nameMatches=[...xml.matchAll(/<(?:\w+:)?Name\s*>([^<]+)<\/(?:\w+:)?Name>/gi)];
  const candidates:{layer:string;raw:string;score:number;area:string}[]=[];
  for(const match of nameMatches){
   const start=xml.lastIndexOf('<Layer',match.index);
@@ -36,8 +36,8 @@ export function parseKnmiCapabilities(xml:string,now=Date.now()):KnmiNowcast{
   if(begin<0||!Number.isFinite(stop))continue;
   const area=xml.slice(begin,stop);
   const layer=decodeXML(match[1].trim());
-  if(!/^[\\w.:/-]{1,150}$/.test(layer))continue;
-  const dimensions=[...area.matchAll(/<(?:\\w+:)?(?:Dimension|Extent)\\b([^>]*)>([^<]+)<\\/(?:\\w+:)?(?:Dimension|Extent)>/gi)];
+  if(!/^[\w.:/-]{1,150}$/.test(layer))continue;
+  const dimensions=[...area.matchAll(/<(?:\w+:)?(?:Dimension|Extent)\b([^>]*)>([^<]+)<\/(?:\w+:)?(?:Dimension|Extent)>/gi)];
   const dimension=dimensions.find(d=>attr(d[1],'name')?.toLowerCase()==='time');
   if(!dimension)continue;
   const score=(/precipitation|rainfall|rain_rate|nowcast/i.test(layer)?20:0)+(/forecast/i.test(layer)?6:0)-(/quality|mask|uncertainty/i.test(layer)?25:0);
@@ -50,7 +50,7 @@ export function parseKnmiCapabilities(xml:string,now=Date.now()):KnmiNowcast{
  if(!frames.length)throw Error('KNMI publiceert momenteel geen recente tijdstappen voor deze voorspelling.');
  // In WMS 1.1.1 the EPSG:4326 BBOX is lon,lat; EPSG:3857 uses metres.
  const projection=/EPSG:3857/i.test(candidate.area)||/EPSG:3857/i.test(xml)?'EPSG:3857':'EPSG:4326';
- const refDim=[...candidate.area.matchAll(/<(?:\\w+:)?(?:Dimension|Extent)\\b([^>]*)>([^<]+)<\\/(?:\\w+:)?(?:Dimension|Extent)>/gi)]
+ const refDim=[...candidate.area.matchAll(/<(?:\w+:)?(?:Dimension|Extent)\b([^>]*)>([^<]+)<\/(?:\w+:)?(?:Dimension|Extent)>/gi)]
   .find(d=>/reference_time|forecast_reference_time/i.test(attr(d[1],'name')||''));
  const referenceTime=refDim?.[2]?.trim().split(',').at(-1);
  return {layer:candidate.layer,frames,fetchedAt:now,style:'',projection,...(referenceTime&&Number.isFinite(Date.parse(referenceTime))?{referenceTime}: {})};
