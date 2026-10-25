@@ -1,0 +1,56 @@
+name: Import WeerWacht source
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  unpack:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Verify and unpack original source archive
+        shell: python
+        run: |
+          import hashlib
+          import os
+          import pathlib
+          import stat
+          import zipfile
+
+          archive = pathlib.Path("WeerWacht.zip")
+          expected = "259fbba6874c9270ab5329dd59dbf49868b9a181a0ed93a0f446f9aefc28e3df"
+          assert hashlib.sha256(archive.read_bytes()).hexdigest() == expected, "Unexpected archive"
+          root = pathlib.Path.cwd().resolve()
+          with zipfile.ZipFile(archive) as source:
+              assert source.testzip() is None, "Archive integrity check failed"
+              files = [item for item in source.infolist() if not item.is_dir()]
+              assert len(files) == 183, "Unexpected file count"
+              for item in files:
+                  path = pathlib.PurePosixPath(item.filename)
+                  assert not path.is_absolute() and ".." not in path.parts
+                  assert not any(p in {".git", ".github", "node_modules"} for p in path.parts)
+                  assert not any(p.startswith((".env", ".dev.vars")) for p in path.parts)
+                  assert not stat.S_ISLNK(item.external_attr >> 16)
+                  target = root.joinpath(*path.parts)
+                  assert target.resolve().is_relative_to(root)
+                  assert not target.exists(), f"Refusing to overwrite {path}"
+              for item in files:
+                  target = root.joinpath(*pathlib.PurePosixPath(item.filename).parts)
+                  target.parent.mkdir(parents=True, exist_ok=True)
+                  data = source.read(item)
+                  target.write_bytes(data)
+                  if item.external_attr >> 16 & 0o111:
+                      target.chmod(0o755)
+                  assert target.read_bytes() == data
+          archive.unlink()
+          print(f"Verified and extracted {len(files)} source files")
+      - name: Commit extracted application
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add --all
+          git commit -m "Extract complete WeerWacht application from verified archive"
+          git push origin HEAD:main
