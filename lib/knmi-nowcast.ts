@@ -4,7 +4,7 @@ export const KNMI_NOWCAST_DATASET='radar_forecast_2.0';
 export type KnmiNowcast={layer:string;frames:number[];fetchedAt:number;style:string;referenceTime?:string;projection:'EPSG:3857'|'EPSG:4326'};
 
 function decodeXML(s:string){return s.replace(/&amp;/g,'&').replace(/&quot;/g,'"').replace(/&apos;/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>');}
-function attr(s:string,key:string){return new RegExp('\\b'+key+'=["\\']([^"\\']*)["\\']','i').exec(s)?.[1];}
+function attr(s:string,key:string){const re=new RegExp(String.raw`\\b`+key+String.raw`=["']([^"']*)["']`,'i');return re.exec(s)?.[1];}
 function times(raw:string){
  const values=new Set<number>();
  for(const item of raw.split(',')){
