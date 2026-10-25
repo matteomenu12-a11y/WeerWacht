@@ -44,7 +44,7 @@ export default function WeatherMaps({place,favorites,onChoose,onAccount}:{place:
  // eslint-disable-next-line react-hooks/exhaustive-deps
  },[active]);
  useEffect(()=>{if(!mapReady||!mapRef.current)return;setPlaying(false);mapRef.current.setView([place.lat,place.lon],Math.max(7,mapRef.current.getZoom()),{animate:false});markerRef.current?.setLatLng([place.lat,place.lon]);const node=document.createElement('span');node.textContent=place.name;markerRef.current?.setTooltipContent(node);},[place,mapReady]);
- useEffect(()=>{if(!mapReady||!mapRef.current)return;const map=mapRef.current,credit=layer==='forecast'?'Bron: <a href="https://www.dwd.de/" target="_blank">Deutscher Wetterdienst</a>':layer==='radar'?'Radar: <a href="https://www.rainviewer.com/" target="_blank">RainViewer</a>':'';if(credit)map.attributionControl.addAttribution(credit);return()=>{if(credit)map.attributionControl.removeAttribution(credit);};},[layer,mapReady]);
+ useEffect(()=>{if(!mapReady||!mapRef.current)return;const map=mapRef.current,credit=layer==='nowcast'?'Bron: <a href="https://dataplatform.knmi.nl/" target="_blank">KNMI pySTEPS</a>':layer==='forecast'?'Bron: <a href="https://www.dwd.de/" target="_blank">Deutscher Wetterdienst</a>':layer==='radar'?'Radar: <a href="https://www.rainviewer.com/" target="_blank">RainViewer</a>':'';if(credit)map.attributionControl.addAttribution(credit);return()=>{if(credit)map.attributionControl.removeAttribution(credit);};},[layer,mapReady]);
  // Prepare complete visible frames in the background. Keep the displayed image
  // until the requested replacement is decoded; its timestamp never advances early.
  useEffect(()=>{if(!radar||!mapReady||layer!=='radar'||!mapRef.current)return;
