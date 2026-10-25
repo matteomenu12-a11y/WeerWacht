@@ -7,9 +7,9 @@
   },
   "scripts": {
     "install:ci": "bash scripts/install-pnpm.sh",
-    "dev": "node scripts/run-framework.mjs dev",
-    "build": "node scripts/run-framework.mjs build",
-    "start": "node --import ./scripts/sites-env.mjs ./node_modules/wrangler/bin/wrangler.js dev --config dist/server/wrangler.json --local --persist-to .wrangler/state --ip 127.0.0.1 --inspector-port 0",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
     "db:generate": "drizzle-kit generate",
     "test": "node --import ./tests/ts-loader.mjs --test tests/*.test.mjs"
@@ -40,7 +40,9 @@
     "tailwind-merge": "3.6.0",
     "vaul": "^1.1.2",
     "web-push": "^3.6.7",
-    "zod": "^3.25.76"
+    "zod": "^3.25.76",
+    "@supabase/ssr": "0.6.1",
+    "@supabase/supabase-js": "2.58.0"
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "1.37.1",
