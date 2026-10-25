@@ -11,7 +11,8 @@ export async function GET(){
   const next=parseKnmiCapabilities(xml);
   cached=next;
   return Response.json(next,{headers:{'Cache-Control':'public, max-age=60, s-maxage=120'}});
- }catch{
+ }catch(error){
+  console.error('[KNMI nowcast] WMS capabilities ophalen of verwerken mislukt:',error instanceof Error?error.message:String(error));
   return Response.json({error:'KNMI-nowcast tijdelijk niet bereikbaar. Kies eventueel DWD ICON-EU.'},{status:503,headers:{'Cache-Control':'no-store'}});
  }
 }
