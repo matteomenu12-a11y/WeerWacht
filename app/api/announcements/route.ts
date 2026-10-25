@@ -1,0 +1,2 @@
+import {getDb} from '@/db';import {announcements} from '@/db/schema';import {gt,desc} from 'drizzle-orm';import {json} from '@/lib/server';
+export async function GET(){try{return json({items:await getDb().select({id:announcements.id,title:announcements.title,body:announcements.body,kind:announcements.kind,expiresAt:announcements.expiresAt}).from(announcements).where(gt(announcements.expiresAt,new Date().toISOString())).orderBy(desc(announcements.createdAt)).limit(10)});}catch{return json({error:'Mededelingen konden niet worden geladen.'},503);}}

@@ -1,0 +1,1 @@
+{"name": "Weerwacht", "short_name": "Weerwacht", "start_url": "/", "display": "standalone", "background_color": "#141614", "theme_color": "#141614", "lang": "nl", "icons": [{"src": "/icon.png?v=3", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}], "id": "/", "scope": "/", "description": "Belgisch weer, neerslagradar en officiële waarschuwingen"}

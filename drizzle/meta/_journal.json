@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1792853080517,
+      "tag": "0000_redundant_warbird",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1792867713180,
+      "tag": "0001_unique_martin_li",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1792868496171,
+      "tag": "0002_flimsy_caretaker",
+      "breakpoints": true
+    }
+  ]
+}
