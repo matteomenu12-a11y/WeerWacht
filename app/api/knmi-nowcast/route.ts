@@ -12,7 +12,8 @@ export async function GET(){
   cached=next;
   return Response.json(next,{headers:{'Cache-Control':'public, max-age=60, s-maxage=120'}});
  }catch(error){
-  console.error('[KNMI nowcast] WMS capabilities ophalen of verwerken mislukt:',error instanceof Error?error.message:String(error));
-  return Response.json({error:'KNMI-nowcast tijdelijk niet bereikbaar. Kies eventueel DWD ICON-EU.'},{status:503,headers:{'Cache-Control':'no-store'}});
+  const detail=error instanceof Error?error.message:String(error);
+  console.error('[KNMI nowcast] WMS capabilities ophalen of verwerken mislukt:',detail);
+  return Response.json({error:'KNMI-nowcast tijdelijk niet bereikbaar. Kies eventueel DWD ICON-EU.',...(process.env.VERCEL_ENV==='preview'?{diagnostic:detail.slice(0,180)}:{})},{status:503,headers:{'Cache-Control':'no-store'}});
  }
 }
