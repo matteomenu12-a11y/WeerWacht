@@ -2,10 +2,12 @@
 import { useState } from 'react';
 import { createBrowserClient } from '@supabase/ssr';
 
-const client = createBrowserClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
-);
+function getClient() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+  if (!url || !key) throw new Error('Inloggen is nog niet beschikbaar: configureer eerst Supabase op je Node.js-host.');
+  return createBrowserClient(url, key);
+}
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [code, setCode] = useState('');
@@ -17,6 +19,7 @@ export default function LoginPage() {
   async function submit(event: React.FormEvent) {
     event.preventDefault(); setBusy(true); setMessage('');
     try {
+      const client = getClient();
       if (!sent) {
         const { error } = await client.auth.signInWithOtp({ email, options: { shouldCreateUser: true, emailRedirectTo: window.location.origin + '/auth/callback' } });
         if (error) throw error;

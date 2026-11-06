@@ -43,3 +43,9 @@ yarn-error.log*
 
 # OS metadata
 .DS_Store
+
+# Small-hosting standalone export
+/dist-node/
+
+# Public example configuration can be committed, real .env files cannot.
+!.env.example

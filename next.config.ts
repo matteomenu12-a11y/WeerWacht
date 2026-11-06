@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Output includes only production runtime dependencies for smaller Node hosts.
+  output: 'standalone',
+  poweredByHeader: false,
 };
 
 export default nextConfig;
