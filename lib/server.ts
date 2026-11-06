@@ -1,7 +1,9 @@
 import { getChatGPTUser } from '@/app/chatgpt-auth';
 export const OWNER_EMAIL = 'smenu@telenet.be';
 export async function identity() {
-  const user = await getChatGPTUser();
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY) return null;
+  let user;
+  try { user = await getChatGPTUser(); } catch { return null; }
   return user ? { ...user, isAdmin: user.email.toLowerCase() === OWNER_EMAIL } : null;
 }
 export function json(data: unknown, status = 200) {
@@ -21,7 +23,9 @@ export async function source<T>(url: string, ttl: number, parse: (response: Resp
     const response = await fetch(url, {signal:AbortSignal.timeout(12000),headers:{Accept:'*/*', 'User-Agent':'Weerwacht/1.0 (personal non-commercial weather app)'}});
     if (!response.ok) { console.error('Weather source HTTP error', new URL(url).hostname, response.status); throw new Error('Upstream '+response.status); }
     const value = {data:await parse(response), fetchedAt:new Date().toISOString()};
-    if(cache.size>100) cache.delete(cache.keys().next().value!);
+    // Bound the in-memory cache on small hosts; never retain expired entries indefinitely.
+    for(const [key,item] of cache) if(Date.now()-item.at>86400000) cache.delete(key);
+    while(cache.size>=48) cache.delete(cache.keys().next().value!);
     cache.set(url,{at:Date.now(),value}); return value;
   })();
   inFlight.set(url,work);

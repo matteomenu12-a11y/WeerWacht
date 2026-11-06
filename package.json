@@ -12,7 +12,9 @@
     "start": "next start",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
     "db:generate": "drizzle-kit generate",
-    "test": "node --import ./tests/ts-loader.mjs --test tests/*.test.mjs"
+    "test": "node --import ./tests/ts-loader.mjs --test tests/*.test.mjs",
+    "start:node": "node main.js",
+    "package:node": "node scripts/package-node.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
