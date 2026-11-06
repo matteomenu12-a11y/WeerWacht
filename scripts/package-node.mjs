@@ -15,6 +15,10 @@ if (!(await isDirectory(standalone))) {
 } else {
   await rm(output, { recursive: true, force: true });
   await cp(standalone, output, { recursive: true });
+  // Never put local environment files into a deployable ZIP.
+  for (const name of ['.env', '.env.local', '.env.production', '.env.production.local', '.dev.vars']) {
+    await rm(join(output, name), { force: true });
+  }
   await mkdir(join(output, '.next'), { recursive: true });
   await cp(join(root, '.next', 'static'), join(output, '.next', 'static'), { recursive: true });
   if (await isDirectory(join(root, 'public'))) {
